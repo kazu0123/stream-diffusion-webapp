@@ -16,11 +16,15 @@
 
 uvを使う場合
 ```
+cd /path/to/stream-diffusion-webapp
+
 uv sync
 ```
 
 uvを使わない場合
 ```
+cd /path/to/stream-diffusion-webapp
+
 python3.10 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
@@ -29,7 +33,8 @@ pip install -r requirements.txt
 ### 2. nodeのライブラリをインストールする
 
 ```
-cd frontend
+cd /path/to/stream-diffusion-webapp/frontend
+
 nvm install
 nvm use
 npm install
@@ -38,7 +43,8 @@ npm install
 ### 3. フロントエンドをビルドする
 
 ```
-cd frontend
+cd /path/to/stream-diffusion-webapp/frontend
+
 npm run build
 ```
 
@@ -46,12 +52,14 @@ npm run build
 
 uvを使う場合
 ```
-cd stream-diffusion-webapp
+cd /path/to/stream-diffusion-webapp
+
 uv run fastapi dev ./backend/app.py
 ```
 
 uvを使わない場合
 ```
-cd stream-diffusion-webapp
+cd /path/to/stream-diffusion-webapp
+
 python3 -m uvicorn backend.app:app --reload
 ```
