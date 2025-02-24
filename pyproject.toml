@@ -4,4 +4,15 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+    "torchvision~=0.16.2",
+    "huggingface_hub<0.26.0",
+    "streamdiffusion",
+    "numpy<2",
+    "av>=13.1.0",
+    "aiortc>=1.10.1",
+    "fastapi[standard]>=0.115.8",
+]
+
+[tool.uv.sources]
+streamdiffusion = { git = "https://github.com/kazu0123/StreamDiffusion.git", rev = "main" }
