@@ -14,6 +14,7 @@ class StreamDiffusionWrapper:
     negative_prompt: str = "low quality, bad quality, blurry, low resolution",
   ):
     self.device = 'mps' if torch.backends.mps.is_available() else 'cpu'
+    self.dtype = torch.float16
 
     self.width = 512
     self.height = 512
@@ -23,7 +24,7 @@ class StreamDiffusionWrapper:
         model_id_or_path,
       ).to(device=self.device)
       
-      pipe.to(torch.float16)
+      pipe.to(self.dtype)
       
     except Exception as e:
       print(f"Model load failed: {e}")
@@ -32,7 +33,7 @@ class StreamDiffusionWrapper:
     self.stream = StreamDiffusion(
       pipe=pipe,
       t_index_list=[16, 32],
-      torch_dtype=torch.float16,
+      torch_dtype=self.dtype,
       width=self.width,
       height=self.height,
       do_add_noise=True,
@@ -52,7 +53,7 @@ class StreamDiffusionWrapper:
   def img2img(self, input_image: Image.Image) -> Image.Image:
     resized = input_image.resize((self.width, self.height))
     preprocessed = self.stream.image_processor.preprocess(resized.convert("RGB"))
-    preprocessed = preprocessed.to(device=self.device, dtype=torch.float16)
+    preprocessed = preprocessed.to(device=self.device, dtype=self.dtype)
 
     output_tensor = self.stream(preprocessed)
 
